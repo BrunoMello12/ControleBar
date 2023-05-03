@@ -31,7 +31,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             foreach(Pedido pedido in listaPedidos)
             {
-                total += pedido.produto.valor;
+                total += pedido.CalcularValor();
             }
             return total;
         }

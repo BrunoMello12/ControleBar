@@ -22,8 +22,9 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         private TelaProduto telaProduto;
         private RepositorioProduto repositorioProduto;
         private RepositorioGarcom repositorioGarcom;
+        private TelaGarcom telaGarcom;
 
-        public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, RepositorioMesa repositorioMesa, TelaProduto telaProduto, RepositorioProduto repositorioProduto, RepositorioGarcom repositorioGarcom)
+        public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, RepositorioMesa repositorioMesa, TelaProduto telaProduto, RepositorioProduto repositorioProduto, RepositorioGarcom repositorioGarcom, TelaGarcom telaGarcom)
         {
             this.repositorioBase = repositorioConta;
             this.repositorioConta = repositorioConta;
@@ -32,6 +33,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             this.telaProduto = telaProduto;
             this.repositorioProduto = repositorioProduto;
             this.repositorioGarcom = repositorioGarcom;
+            this.telaGarcom = telaGarcom;
         }
 
         protected override void MostrarTabela(ArrayList registros)
@@ -55,8 +57,11 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
             telaProduto.VisualizarRegistros(false);
             Console.WriteLine();
-            telaMesa.VisualizarRegistros(false);
+            VisualizarRegistros(false);
             Console.WriteLine();
+            telaGarcom.VisualizarRegistros(false);
+            Console.WriteLine();
+
 
             if (repositorioProduto.TemRegistros() == false)
                 return;
@@ -64,18 +69,21 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             if (repositorioMesa.TemRegistros() == false)
                 return;
 
-            Console.WriteLine("Informe o produto: ");
+            if (repositorioGarcom.TemRegistros() == false)
+                return;
+
+            Console.Write("Informe o produto: ");
             int idSelecionado = int.Parse(Console.ReadLine());
             Produto produto = (Produto)repositorioProduto.SelecionarPorId(idSelecionado);
 
-            Console.WriteLine("Informe a quantidade: ");
+            Console.Write("Informe a quantidade: ");
             int quantidade = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("Informe o id da conta que deseja fazer o pedido: ");
+            Console.Write("Informe o id da conta que deseja fazer o pedido: ");
             int id = int.Parse(Console.ReadLine());
             Conta conta = (Conta)repositorioConta.SelecionarPorId(id);
 
-            Console.WriteLine("Informe o garçom que está fazendo o pedido: ");
+            Console.Write("Informe o garçom que está fazendo o pedido: ");
             int id2 = int.Parse(Console.ReadLine());
 
             Garcom garcom = (Garcom)repositorioGarcom.SelecionarPorId(id2);
