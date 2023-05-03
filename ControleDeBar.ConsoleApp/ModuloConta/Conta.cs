@@ -17,19 +17,21 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         public Mesa mesa;
         public string status;
         public ArrayList listaPedidos = new ArrayList();
-        public int total = 0;
-        public DateTime dataPedido;
+        public int total;
+        public DateTime data;
 
         public Conta(string nome, Mesa mesa)
         {
             this.nome = nome;
             this.mesa = mesa;
             status = "ABERTO";
+            this.data = DateTime.Now.Date;
         }
 
         public double CalcularValorTotal()
         {
-            foreach(Pedido pedido in listaPedidos)
+            total = 0;
+            foreach (Pedido pedido in listaPedidos)
             {
                 total += pedido.CalcularValor();
             }

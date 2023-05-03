@@ -38,6 +38,8 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome", "Mesa");
 
             Console.WriteLine("------------------------------------------------------");
@@ -49,6 +51,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
                     Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", conta.id, conta.nome, conta.mesa.numeroMesa);
                 }
             }
+            Console.ResetColor();
 
         }
 
@@ -97,13 +100,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
         public void VisualizarFaturamentoDoDia()
         {
-            double totalDia = 0;
-            foreach(Conta conta in repositorioConta.listaRegistros)
-            {
-                totalDia += conta.CalcularValorTotal();
-            }
-            Console.WriteLine();
-            Console.WriteLine($"O faturamento total do dia foi: {totalDia}");
+            Console.WriteLine($"O faturamento total do dia foi: {repositorioConta.Total()}");
         }
 
         protected override EntidadeBase ObterRegistro()

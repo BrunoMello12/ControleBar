@@ -18,6 +18,8 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome", "Cpf");
 
             Console.WriteLine("--------------------------------------------------------------------");
@@ -26,6 +28,8 @@ namespace ControleDeBar.ConsoleApp.ModuloGarcom
             {
                 Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", garcom.id, garcom.nome, garcom.cpf);
             }
+
+            Console.ResetColor();
         }
 
         protected override EntidadeBase ObterRegistro()

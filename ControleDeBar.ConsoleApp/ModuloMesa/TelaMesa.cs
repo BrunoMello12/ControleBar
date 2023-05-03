@@ -19,6 +19,8 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
 
         protected override void MostrarTabela(ArrayList registros)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
+
             Console.WriteLine("{0, -10} | {1, -20}", "Id", "Mesa");
 
             Console.WriteLine("------------------------------");
@@ -27,6 +29,8 @@ namespace ControleDeBar.ConsoleApp.ModuloMesa
             {
                 Console.WriteLine("{0, -10} | {1, -20}", mesa.id, "Mesa" + mesa.numeroMesa);
             }
+
+            Console.ResetColor();
         }
 
         protected override EntidadeBase ObterRegistro()
