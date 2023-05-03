@@ -16,15 +16,14 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 {
     public class TelaConta : TelaBase
     {
-        Pedido pedido;
-        Conta conta;
         private RepositorioConta repositorioConta;
         private RepositorioMesa repositorioMesa;
         private TelaMesa telaMesa;
         private TelaProduto telaProduto;
         private RepositorioProduto repositorioProduto;
+        private RepositorioGarcom repositorioGarcom;
 
-        public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, RepositorioMesa repositorioMesa, TelaProduto telaProduto, RepositorioProduto repositorioProduto)
+        public TelaConta(RepositorioConta repositorioConta, TelaMesa telaMesa, RepositorioMesa repositorioMesa, TelaProduto telaProduto, RepositorioProduto repositorioProduto, RepositorioGarcom repositorioGarcom)
         {
             this.repositorioBase = repositorioConta;
             this.repositorioConta = repositorioConta;
@@ -32,63 +31,71 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             this.repositorioMesa = repositorioMesa;
             this.telaProduto = telaProduto;
             this.repositorioProduto = repositorioProduto;
+            this.repositorioGarcom = repositorioGarcom;
         }
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            if(conta.status == "ABERTO")
+            Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome", "Mesa");
+
+            Console.WriteLine("------------------------------------------------------");
+
+            foreach (Conta conta in registros)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome", "Mesa");
-
-                Console.WriteLine("------------------------------------------------------");
-
-                foreach (Conta conta in registros)
+                if(conta.status == "ABERTO")
                 {
                     Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", conta.id, conta.nome, conta.mesa.numeroMesa);
                 }
             }
+
         }
 
         public void RegistrarPedidos()
         {
-            Pedido pedido = new Pedido();
 
             telaProduto.VisualizarRegistros(false);
             Console.WriteLine();
             telaMesa.VisualizarRegistros(false);
             Console.WriteLine();
 
+            if (repositorioProduto.TemRegistros() == false)
+                return;
+
+            if (repositorioMesa.TemRegistros() == false)
+                return;
+
             Console.WriteLine("Informe o produto: ");
             int idSelecionado = int.Parse(Console.ReadLine());
-            pedido.produto = (Produto)repositorioProduto.SelecionarPorId(idSelecionado);
+            Produto produto = (Produto)repositorioProduto.SelecionarPorId(idSelecionado);
 
             Console.WriteLine("Informe a quantidade: ");
             int quantidade = int.Parse(Console.ReadLine());
 
-            pedido.produto.valor *= quantidade;
-
-            Console.WriteLine("Informe a mesa que deseja fazer o pedido: ");
+            Console.WriteLine("Informe o id da conta que deseja fazer o pedido: ");
             int id = int.Parse(Console.ReadLine());
-            pedido.mesa = (Mesa)repositorioMesa.SelecionarPorId(id);
+            Conta conta = (Conta)repositorioConta.SelecionarPorId(id);
 
+            Console.WriteLine("Informe o garçom que está fazendo o pedido: ");
+            int id2 = int.Parse(Console.ReadLine());
 
-            pedido.Pedidos.Add(pedido);
+            Garcom garcom = (Garcom)repositorioGarcom.SelecionarPorId(id2);
+
+            conta.listaPedidos.Add(new Pedido(produto, garcom, quantidade));
 
             MostrarMensagem("Pedido registrado com sucesso!", ConsoleColor.Green);
         }
 
+        
+
         public void VisualizarFaturamentoDoDia()
         {
-            Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "ID", "Produto", "Mesa");
-
-            Console.WriteLine("------------------------------------------------------");
-            foreach (Pedido pedido in pedido.Pedidos)
+            double totalDia = 0;
+            foreach(Conta conta in repositorioConta.listaRegistros)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {1, -20}", pedido.id, pedido.produto, pedido.mesa);
-                pedido.Total += pedido.produto.valor;
+                totalDia += conta.CalcularValorTotal();
             }
-
-            Console.WriteLine($"O total faturado no Dia foi de: {pedido.Total}");
+            Console.WriteLine();
+            Console.WriteLine($"O faturamento total do dia foi: {totalDia}");
         }
 
         protected override EntidadeBase ObterRegistro()
@@ -110,11 +117,19 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         {
             MostrarTabela(repositorioConta.listaRegistros);
 
+            if (repositorioConta.TemRegistros() == false)
+            {
+                MostrarMensagem("Não tem contas cadastradas", ConsoleColor.DarkYellow);
+                return;
+            }
+         
             Console.WriteLine();
             Console.WriteLine("Informe o id da conta que deseja fechar: ");
             int idSelecionado = int.Parse(Console.ReadLine());
+
             Conta conta = (Conta)repositorioConta.SelecionarPorId(idSelecionado);
-            repositorioConta.FecharConta(conta);
+
+            conta.FecharConta(conta);
 
             MostrarMensagem("Conta fechada com sucesso!", ConsoleColor.Green);
         }

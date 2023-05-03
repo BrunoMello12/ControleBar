@@ -21,13 +21,13 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
 
         protected override void MostrarTabela(ArrayList registros)
         {
-            Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome", "Data de Validade");
+            Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", "Id", "Nome", "Valor");
 
             Console.WriteLine("--------------------------------------------------------------------");
 
             foreach (Produto produto in registros)
             {
-                Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", produto.id, produto.nome, produto.dataValidade);
+                Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", produto.id, produto.nome, produto.valor);
             }
         }
 
@@ -39,10 +39,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
             Console.Write("Digite o preço: ");
             int valor = int.Parse(Console.ReadLine());
 
-            Console.Write("Digite a data de validade: ");
-            string data = Console.ReadLine();
-
-            return new Produto(nome,valor,data);
+            return new Produto(nome,valor);
         }
     }
 }

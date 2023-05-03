@@ -1,4 +1,5 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloPedido;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,6 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 {
     public class RepositorioConta : RepositorioBase
     {
-        Conta conta;
-
-        public void FecharConta(Conta conta)
-        {
-            conta.status = "FECHADO";
-        }
+       
     }
 }

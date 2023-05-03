@@ -63,7 +63,7 @@ namespace ControleDeBar.ConsoleApp
             switch (opcaoMenuGarcom)
             {
                 case "1": telaGarcom.InserirNovoRegistro(); break;
-                case "2": telaGarcom.VisualizarRegistros(false); break;
+                case "2": telaGarcom.VisualizarRegistros(false); Console.ReadLine(); break;
                 case "3": telaGarcom.EditarRegistro(); break;
                 case "4": telaGarcom.ExcluirRegistro(); break;
             }

@@ -1,4 +1,5 @@
 ﻿using ControleDeBar.ConsoleApp.Compartilhado;
+using ControleDeBar.ConsoleApp.ModuloGarcom;
 using ControleDeBar.ConsoleApp.ModuloMesa;
 using ControleDeBar.ConsoleApp.ModuloProduto;
 using System;
@@ -10,21 +11,22 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloPedido
 {
-    public class Pedido : EntidadeBase
+    public class Pedido
     {
         public Produto produto;
-        public Mesa mesa;
-        public ArrayList Pedidos = new ArrayList();
-        public int Total = 0;
+        public Garcom garcom;
+        public int quantidade;
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public Pedido(Produto produto, Garcom garcom, int quantidade)
         {
-            throw new NotImplementedException();
+            this.produto = produto;
+            this.garcom = garcom;
+            this.quantidade = quantidade;
         }
 
-        public override ArrayList Validar()
+        public int CalcularValor()
         {
-            throw new NotImplementedException();
+           return quantidade * produto.valor;
         }
     }
 }

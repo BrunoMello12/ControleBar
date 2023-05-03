@@ -21,10 +21,11 @@ namespace ControleDeBar.ConsoleApp
             TelaGarcom telaGarcom = new TelaGarcom(repositorioGarcom);
             TelaMesa telaMesa = new TelaMesa(repositorioMesa);
             TelaProduto telaProduto = new TelaProduto(repositorioProduto);
-            TelaConta telaConta = new TelaConta(repositorioConta, telaMesa, repositorioMesa, telaProduto, repositorioProduto);
+            TelaConta telaConta = new TelaConta(repositorioConta, telaMesa, repositorioMesa, telaProduto, repositorioProduto, repositorioGarcom);
 
             Menus menu = new Menus(telaGarcom, telaConta, telaMesa, telaProduto);
 
+            
             menu.VisualizarMenuPrincipal();
         }
     }

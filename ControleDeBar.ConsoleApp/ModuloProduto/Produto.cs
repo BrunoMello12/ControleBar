@@ -13,13 +13,11 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
     {
         public string nome;
         public int valor;
-        public string dataValidade;
 
-        public Produto(string nome, int valor, string dataValidade)
+        public Produto(string nome, int valor)
         {
             this.nome = nome;
             this.valor = valor;
-            this.dataValidade = dataValidade;
         }
 
         public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
@@ -28,7 +26,6 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
 
             this.nome = produtoAtualizado.nome;
             this.valor = produtoAtualizado.valor;
-            this.dataValidade = produtoAtualizado.dataValidade;
         }
 
         public override ArrayList Validar()
@@ -40,9 +37,6 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
 
             if (valor == null)
                 erros.Add("O campo \"valor\" é obrigatório");
-
-            if (string.IsNullOrEmpty(dataValidade.Trim()))
-                erros.Add("O campo \"data de validade\" é obrigatório");
 
             return erros;
         }
