@@ -26,7 +26,7 @@ namespace ControleDeBar.ConsoleApp
             Menus menu = new Menus(telaGarcom, telaConta, telaMesa, telaProduto);
 
             
-            menu.VisualizarMenuPrincipal();
+            menu.Menu();
         }
     }
 }

@@ -27,86 +27,43 @@ namespace ControleDeBar.ConsoleApp
             this.telaProduto = telaProduto;
         }
 
-        public void VisualizarMenuPrincipal()
-        {
-            while (true)
-            {
-                Console.Clear();
-                Console.WriteLine("Digite 1 para gerenciar Garçons");
-                Console.WriteLine("Digite 2 para gerenciar Mesas");
-                Console.WriteLine("Digite 3 para gerenciar Produtos");
-                Console.WriteLine("Digite 4 para gerenciar Contas");
-                Console.WriteLine("Digite s para sair");
-
-                string opcaoMenuPrincipal = Console.ReadLine();
-
-                if (opcaoMenuPrincipal == "s" || opcaoMenuPrincipal == "S")
-                {
-                    Console.WriteLine("Saindo...");
-                    break;
-                }
-
-                switch (opcaoMenuPrincipal)
-                {
-                    case "1": VisualizarMenuGarcom(); break;
-                    case "2": VisualizarMenuMesas(); break;
-                    case "3": VisualizarMenuProdutos(); break;
-                    case "4": VisualizarMenuContas(); break;
-                }
-            }
-        }
-
-        public void VisualizarMenuGarcom()
-        {
-            string opcaoMenuGarcom = telaGarcom.ApresentarMenu();
-
-            switch (opcaoMenuGarcom)
-            {
-                case "1": telaGarcom.InserirNovoRegistro(); break;
-                case "2": telaGarcom.VisualizarRegistros(false); Console.ReadLine(); break;
-                case "3": telaGarcom.EditarRegistro(); break;
-                case "4": telaGarcom.ExcluirRegistro(); break;
-            }
-        }
-
-        public void VisualizarMenuMesas()
-        {
-            string opcaoMenuMesas = telaMesa.ApresentarMenu();
-
-            switch (opcaoMenuMesas)
-            {
-                case "1": telaMesa.InserirNovoRegistro(); break;
-                case "2": telaMesa.VisualizarRegistros(false); Console.ReadLine(); break;
-                case "3": telaMesa.EditarRegistro(); break;
-                case "4": telaMesa.ExcluirRegistro(); break;
-            }
-        }
-
-        public void VisualizarMenuProdutos()
-        {
-            string opcaoMenuProduto = telaProduto.ApresentarMenu();
-
-            switch(opcaoMenuProduto)
-            {
-                case "1": telaProduto.InserirNovoRegistro(); break;
-                case "2": telaProduto.VisualizarRegistros(false); Console.ReadLine(); break;
-                case "3": telaProduto.EditarRegistro(); break;
-                case "4": telaProduto.ExcluirRegistro(); break;
-            }
-        }
-
-        public void VisualizarMenuContas()
+        public string VisualizarMenuPrincipal()
         {
             Console.Clear();
-            Console.WriteLine("Digite 1 para Abrir uma conta");
-            Console.WriteLine("Digite 2 para Registrar Pedidos");
-            Console.WriteLine("Digite 3 para Fechar uma conta");
-            Console.WriteLine("Digite 4 para Visualizar Contas abertas");
-            Console.WriteLine("Digite 5 para visualizar Total faturado no dia");
+            Console.WriteLine("Digite 1 para gerenciar Garçons");
+            Console.WriteLine("Digite 2 para gerenciar Mesas");
+            Console.WriteLine("Digite 3 para gerenciar Produtos");
+            Console.WriteLine("Digite 4 para gerenciar Contas");
+            Console.WriteLine("Digite s para sair");
 
-            string opcaoMenuContas = Console.ReadLine();
+            string opcaoMenuPrincipal = Console.ReadLine();
 
-            switch(opcaoMenuContas) 
+            return opcaoMenuPrincipal;
+        }
+
+        public void Menu()
+        { 
+            while (true)
+            {
+                TelaBase tela = SelecionarTela();
+
+                if (tela == null)
+                    break;
+
+                if (tela is TelaConta)
+                    CadastrarContas(tela);
+                else
+                    ExecutarCadastros(tela);
+            }
+        }
+
+        private void CadastrarContas(TelaBase tela)
+        {
+            string subMenu = tela.ApresentarMenu();
+
+            TelaConta telaConta = (TelaConta)tela;
+
+            switch (subMenu)
             {
                 case "1": telaConta.InserirNovoRegistro(); break;
                 case "2": telaConta.RegistrarPedidos(); break;
@@ -114,6 +71,34 @@ namespace ControleDeBar.ConsoleApp
                 case "4": telaConta.VisualizarRegistros(false); Console.ReadLine(); break;
                 case "5": telaConta.VisualizarFaturamentoDoDia(); Console.ReadLine(); break;
             }
+        }
+
+        private void ExecutarCadastros(TelaBase tela)
+        {
+            string subMenu = tela.ApresentarMenu();
+
+            switch(subMenu)
+            {
+                case "1": tela.InserirNovoRegistro(); break;
+                case "2": tela.VisualizarRegistros(false); Console.ReadLine(); break;
+                case "3": tela.EditarRegistro(); break;
+                case "4": tela.ExcluirRegistro(); break;
+            }
+        }
+
+        public TelaBase SelecionarTela()
+        {
+            string opcao = VisualizarMenuPrincipal();
+
+            switch (opcao)
+            {
+                case "1": return telaGarcom;
+                case "2": return telaMesa;
+                case "3": return telaProduto;
+                case "4": return telaConta;
+            }
+
+            return null;
         }
     }
 }

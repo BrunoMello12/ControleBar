@@ -55,6 +55,11 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
 
             EntidadeBase registro = ObterRegistro();
 
+            if(registro == null)
+            {
+                return;
+            }
+
             if (TemErrosDeValidacao(registro))
             {
                 InserirNovoRegistro(); 

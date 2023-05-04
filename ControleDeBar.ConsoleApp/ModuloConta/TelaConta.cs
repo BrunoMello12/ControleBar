@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -34,6 +35,22 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             this.repositorioProduto = repositorioProduto;
             this.repositorioGarcom = repositorioGarcom;
             this.telaGarcom = telaGarcom;
+        }
+
+        public override string ApresentarMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Cadastro de Contas \n");
+            Console.WriteLine("Digite 1 para Abrir Nova Conta");
+            Console.WriteLine("Digite 2 para Registrar Pedidos");
+            Console.WriteLine("Digite 3 para Fechar Conta");
+            Console.WriteLine("Digite 4 para Visualizar Contas Abertas");
+            Console.WriteLine("Digite 5 para Visualizar Faturamento do Dia");
+            Console.WriteLine("Digite s para Sair");
+
+            string opcao = Console.ReadLine();
+
+            return opcao;
         }
 
         protected override void MostrarTabela(ArrayList registros)
@@ -96,8 +113,6 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             MostrarMensagem("Pedido registrado com sucesso!", ConsoleColor.Green);
         }
 
-        
-
         public void VisualizarFaturamentoDoDia()
         {
             Console.WriteLine($"O faturamento total do dia foi: {repositorioConta.Total()}");
@@ -106,6 +121,11 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         protected override EntidadeBase ObterRegistro()
         {
             telaMesa.VisualizarRegistros(false);
+
+            if(repositorioMesa.TemRegistros() == false )
+            {
+                return null;
+            }
 
             Console.WriteLine();
             Console.Write("Informe o id da mesa: ");
