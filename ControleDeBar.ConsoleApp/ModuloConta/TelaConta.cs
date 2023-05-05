@@ -15,7 +15,7 @@ using System.Xml;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
-    public class TelaConta : TelaBase
+    public class TelaConta : TelaBase<RepositorioConta, Conta>
     {
         private RepositorioConta repositorioConta;
         private RepositorioMesa repositorioMesa;
@@ -53,7 +53,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             return opcao;
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Conta> contas)
         {
             Console.ForegroundColor = ConsoleColor.Red;
 
@@ -61,7 +61,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
 
             Console.WriteLine("------------------------------------------------------");
 
-            foreach (Conta conta in registros)
+            foreach (Conta conta in contas)
             {
                 if(conta.status == "ABERTO")
                 {
@@ -118,7 +118,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             Console.WriteLine($"O faturamento total do dia foi: {repositorioConta.Total()}");
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Conta ObterRegistro()
         {
             telaMesa.VisualizarRegistros(false);
 
@@ -135,7 +135,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             Console.Write("Informe o nome da conta: ");
             string nome = Console.ReadLine();
 
-            return new Conta(nome, mesa);
+            return new Conta(repositorioConta.contadorRegistros,nome, mesa);
         }
 
         public void FecharConta()

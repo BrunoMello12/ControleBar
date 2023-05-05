@@ -8,21 +8,20 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloGarcom
 {
-    public class Garcom : EntidadeBase
+    public class Garcom : EntidadeBase<Garcom>
     {
         public string nome;
         public string cpf;
 
-        public Garcom(string nome, string cpf)
+        public Garcom(int id, string nome, string cpf)
         {
+            this.id = id;
             this.nome = nome;
             this.cpf = cpf;
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public override void AtualizarInformacoes(Garcom garcomAtualizado)
         {
-            Garcom garcomAtualizado = (Garcom)registroAtualizado;
-
             this.nome = garcomAtualizado.nome;
             this.cpf = garcomAtualizado.cpf;
         }

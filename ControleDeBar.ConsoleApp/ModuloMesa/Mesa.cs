@@ -9,20 +9,19 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloMesa
 {
-    public class Mesa : EntidadeBase
+    public class Mesa : EntidadeBase<Mesa>
     {
         public string numeroMesa;
 
-        public Mesa(string numeroMesa)
+        public Mesa(int id, string numeroMesa)
         {
+            this.id = id;
             this.numeroMesa = numeroMesa;
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public override void AtualizarInformacoes(Mesa mesaAtualizada)
         {
-            Mesa emsaAtualizada = (Mesa)registroAtualizado;
-
-            this.numeroMesa = emsaAtualizada.numeroMesa;
+            this.numeroMesa = mesaAtualizada.numeroMesa;
         }
 
         public override ArrayList Validar()

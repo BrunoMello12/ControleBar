@@ -9,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
-    public class RepositorioConta : RepositorioBase
+    public class RepositorioConta : RepositorioBase<Conta>
     {
+        public RepositorioConta(List<Conta> listaContas)
+        {
+            listaRegistros = listaContas;
+        }
+
         public double Total()
         {
             double totalDeContas = 0;

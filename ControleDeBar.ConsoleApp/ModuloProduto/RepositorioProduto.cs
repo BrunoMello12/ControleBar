@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloProduto
 {
-    public class RepositorioProduto : RepositorioBase
+    public class RepositorioProduto : RepositorioBase<Produto>
     {
+        public RepositorioProduto(List<Produto> listaProdutos)
+        {
+            listaRegistros = listaProdutos;
+        }
     }
 }

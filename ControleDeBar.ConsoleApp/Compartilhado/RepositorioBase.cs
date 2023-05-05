@@ -2,12 +2,12 @@
 
 namespace ControleDeBar.ConsoleApp.Compartilhado
 {
-    public abstract class RepositorioBase
+    public class RepositorioBase<TEntidade> where TEntidade : EntidadeBase<TEntidade>
     {
-        public ArrayList listaRegistros = new ArrayList();
-        protected int contadorRegistros = 0;
+        public List<TEntidade> listaRegistros = new List<TEntidade>();
+        public int contadorRegistros = 4;
 
-        public virtual void Inserir(EntidadeBase registro)
+        public virtual void Inserir(TEntidade registro)
         {
             contadorRegistros++;
 
@@ -16,35 +16,35 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
             listaRegistros.Add(registro);
         }
 
-        public virtual void Editar(int id, EntidadeBase registroAtualizado)
+        public virtual void Editar(int id, TEntidade registroAtualizado)
         {
-            EntidadeBase registroSelecionado = SelecionarPorId(id);
+            TEntidade registroSelecionado = SelecionarPorId(id);
 
             registroSelecionado.AtualizarInformacoes(registroAtualizado);
         }
 
-        public virtual void Editar(EntidadeBase registroSelecionado, EntidadeBase registroAtualizado)
+        public virtual void Editar(TEntidade registroSelecionado, TEntidade registroAtualizado)
         {
             registroSelecionado.AtualizarInformacoes(registroAtualizado);
         }
 
         public virtual void Excluir(int id)
         {
-            EntidadeBase registroSelecionado = SelecionarPorId(id);
+            TEntidade registroSelecionado = SelecionarPorId(id);
 
             listaRegistros.Remove(registroSelecionado);
         }
 
-        public virtual void Excluir(EntidadeBase registroSelecionado)
+        public virtual void Excluir(TEntidade registroSelecionado)
         {
             listaRegistros.Remove(registroSelecionado);
         }
 
-        public virtual EntidadeBase SelecionarPorId(int id)
+        public virtual TEntidade SelecionarPorId(int id)
         {
-            EntidadeBase registroSelecionado = null;
+            TEntidade registroSelecionado = null;
 
-            foreach (EntidadeBase registro in listaRegistros)
+            foreach (TEntidade registro in listaRegistros)
             {
                 if (registro.id == id)
                 {
@@ -56,7 +56,7 @@ namespace ControleDeBar.ConsoleApp.Compartilhado
             return registroSelecionado;
         }
 
-        public virtual ArrayList SelecionarTodos()
+        public virtual List<TEntidade> SelecionarTodos()
         {
             return listaRegistros;
         }

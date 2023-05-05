@@ -11,16 +11,19 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloProduto
 {
-    public class TelaProduto : TelaBase
+    public class TelaProduto : TelaBase<RepositorioProduto, Produto> 
     {
+        private RepositorioProduto repositorioProduto;
+
         public TelaProduto(RepositorioProduto repositorioProduto)
         {
             this.repositorioBase = repositorioProduto;
+            this.repositorioProduto = repositorioProduto;
             nomeEntidade = "Produto";
             sufixo = "s";
         }
 
-        protected override void MostrarTabela(ArrayList registros)
+        protected override void MostrarTabela(List<Produto> produtos)
         {
             Console.ForegroundColor = ConsoleColor.Red;
 
@@ -28,7 +31,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
 
             Console.WriteLine("--------------------------------------------------------------------");
 
-            foreach (Produto produto in registros)
+            foreach (Produto produto in produtos)
             {
                 Console.WriteLine("{0, -10} | {1, -20} | {2, -20}", produto.id, produto.nome, produto.valor);
             }
@@ -36,7 +39,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
             Console.ResetColor();
         }
 
-        protected override EntidadeBase ObterRegistro()
+        protected override Produto ObterRegistro()
         {
             Console.Write("Digite o nome: ");
             string nome = Console.ReadLine();
@@ -60,7 +63,7 @@ namespace ControleDeBar.ConsoleApp.ModuloProduto
                 }
             } while (valorInvalido);
             
-            return new Produto(nome, valor);
+            return new Produto(repositorioProduto.contadorRegistros, nome, valor);
 
         }
     }

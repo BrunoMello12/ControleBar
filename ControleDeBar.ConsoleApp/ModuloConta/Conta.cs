@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloConta
 {
-    public class Conta : EntidadeBase
+    public class Conta : EntidadeBase<Conta>
     {
         public string nome;
         public Mesa mesa;
@@ -20,8 +20,9 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
         public int total;
         public DateTime data;
 
-        public Conta(string nome, Mesa mesa)
+        public Conta(int id, string nome, Mesa mesa)
         {
+            this.id = id;
             this.nome = nome;
             this.mesa = mesa;
             status = "ABERTO";
@@ -43,8 +44,7 @@ namespace ControleDeBar.ConsoleApp.ModuloConta
             conta.status = "FECHADO";
         }
 
-
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public override void AtualizarInformacoes(Conta contaAtualizada)
         {
             throw new NotImplementedException();
         }

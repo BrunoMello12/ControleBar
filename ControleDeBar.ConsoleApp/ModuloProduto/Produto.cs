@@ -9,21 +9,20 @@ using System.Threading.Tasks;
 
 namespace ControleDeBar.ConsoleApp.ModuloProduto
 {
-    public class Produto : EntidadeBase
+    public class Produto : EntidadeBase<Produto>
     {
         public string nome;
         public int valor;
 
-        public Produto(string nome, int valor)
+        public Produto(int id, string nome, int valor)
         {
+            this.id = id;
             this.nome = nome;
             this.valor = valor;
         }
 
-        public override void AtualizarInformacoes(EntidadeBase registroAtualizado)
+        public override void AtualizarInformacoes(Produto produtoAtualizado)
         {
-            Produto produtoAtualizado = (Produto)registroAtualizado;
-
             this.nome = produtoAtualizado.nome;
             this.valor = produtoAtualizado.valor;
         }

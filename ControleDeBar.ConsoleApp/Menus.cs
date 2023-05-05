@@ -45,7 +45,7 @@ namespace ControleDeBar.ConsoleApp
         { 
             while (true)
             {
-                TelaBase tela = SelecionarTela();
+                ITelaCadastravel tela = SelecionarTela();
 
                 if (tela == null)
                     break;
@@ -57,7 +57,7 @@ namespace ControleDeBar.ConsoleApp
             }
         }
 
-        private void CadastrarContas(TelaBase tela)
+        private void CadastrarContas(ITelaCadastravel tela)
         {
             string subMenu = tela.ApresentarMenu();
 
@@ -73,7 +73,7 @@ namespace ControleDeBar.ConsoleApp
             }
         }
 
-        private void ExecutarCadastros(TelaBase tela)
+        private void ExecutarCadastros(ITelaCadastravel tela)
         {
             string subMenu = tela.ApresentarMenu();
 
@@ -86,7 +86,7 @@ namespace ControleDeBar.ConsoleApp
             }
         }
 
-        public TelaBase SelecionarTela()
+        public ITelaCadastravel SelecionarTela()
         {
             string opcao = VisualizarMenuPrincipal();
 
